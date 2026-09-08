@@ -1,0 +1,8 @@
+JDK utilizado na compilacao
+
+Distribuicao: Azul Zulu OpenJDK 8 com JavaFX
+Versao: 8.82.0.21-ca-fx-jdk8.0.432
+Plataforma: Linux x64
+
+Download:
+https://cdn.azul.com/zulu/bin/zulu8.82.0.21-ca-fx-jdk8.0.432-linux_x64.tar.gz
