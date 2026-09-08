@@ -88,7 +88,7 @@ public class TextEditorController implements Initializable {
             String[] lineParts = lines[i].split(" ");
             if (lineParts.length != 2) {
                 if(!lineParts[0].equals("HALT")){
-                    this.throwErrorAlert("Error de sintaxis en la linea: " + lines[i]);
+                    this.throwErrorAlert("Erro de sintaxe na linha: " + lines[i]);
                     return;
                 }
             }
@@ -103,7 +103,7 @@ public class TextEditorController implements Initializable {
                 for (int j = 0; j < 2; j++) {
                     if (arguments[j].length() == 1) {//Si el primer argumento es la letra de un registro
                         if (!arguments[j].equals("A") && !arguments[j].equals("B") && !arguments[j].equals("C") && !arguments[j].equals("D")) {
-                            this.throwErrorAlert("Referenciando un registro invalido en: " + lines[i]);
+                            this.throwErrorAlert("Registro inválido referenciado em: " + lines[i]);
                             return;
                         } else {
                             if (arguments[j].equals("A")) {
@@ -120,12 +120,12 @@ public class TextEditorController implements Initializable {
                         char ns = arguments[j].charAt(arguments[j].length() - 1);
                         String regSt = arguments[j].split(ns + "")[0];
                         if (ns != 'B' && ns != 'D' && ns != 'H') {
-                            this.throwErrorAlert("Sistema numérico desconocido en: " + lines[i]);
+                            this.throwErrorAlert("Sistema numérico desconhecido em: " + lines[i]);
                             return;
                         } else {
                             if (ns == 'B') {
                                 if (regSt.length() > 2) {
-                                    this.throwErrorAlert("Solo 4 registros disponibles(00,01,10,11)binary \nReferenciando un registro con más de dos dígitos en formato binario en la linea: " + lines[i]);
+                                    this.throwErrorAlert("Há apenas 4 registros disponíveis (00, 01, 10, 11) em binário.\nRegistro com mais de dois dígitos referenciado na linha: " + lines[i]);
                                     return;
                                 }
                                 String toAdd = this.fillZeros(regSt, ns, 2, lines[i]);
@@ -136,16 +136,16 @@ public class TextEditorController implements Initializable {
                                 }
                             } else if (ns == 'D') {
                                 if (regSt.length() > 1) {
-                                    this.throwErrorAlert("Solo 4 registros disponibles(0,1,2,3)decimal \nReferenciando un registro con más de dos dígitos en formato decimal en la linea: " + lines[i]);
+                                    this.throwErrorAlert("Há apenas 4 registros disponíveis (0, 1, 2, 3) em decimal.\nRegistro com mais de um dígito referenciado na linha: " + lines[i]);
                                     return;
                                 } else {
                                     if (this.isValidDecimal(regSt)) {
                                         if (Integer.parseInt(regSt) > 3) {
-                                            this.throwErrorAlert("Solo 4 registros disponibles (0,1,2,3)decimal \nReferenciando un registro no existente en la linea: " + lines[i]);
+                                            this.throwErrorAlert("Há apenas 4 registros disponíveis (0, 1, 2, 3) em decimal.\nRegistro inexistente referenciado na linha: " + lines[i]);
                                             return;
                                         }
                                     }else{
-                                        this.throwErrorAlert("Digito no decimal encontrado en la linea: " + lines[i]);
+                                        this.throwErrorAlert("Dígito não decimal encontrado na linha: " + lines[i]);
                                         return;
                                     }
                                 }
@@ -157,16 +157,16 @@ public class TextEditorController implements Initializable {
                                 }
                             } else if (ns == 'H') {
                                 if (regSt.length() > 1) {
-                                    this.throwErrorAlert("Solo 4 registros disponibles(0,1,2,3)hexadecimal \nReferenciando un registro con más de dos dígitos en formato hexadecimal en la linea: " + lines[i]);
+                                    this.throwErrorAlert("Há apenas 4 registros disponíveis (0, 1, 2, 3) em hexadecimal.\nRegistro com mais de um dígito referenciado na linha: " + lines[i]);
                                     return;
                                 } else {
                                     if (regSt.equals("4") || regSt.equals("5") || regSt.equals("6") || regSt.equals("7") || regSt.equals("8") || regSt.equals("9") || regSt.equals("A") || regSt.equals("B")
                                             || regSt.equals("C") || regSt.equals("D") || regSt.equals("E") || regSt.equals("F")) {
-                                        this.throwErrorAlert("Solo 4 registros disponibles (0,1,2,3)hexadecimal \nReferenciando un registro no existente en la linea: " + lines[i]);
+                                        this.throwErrorAlert("Há apenas 4 registros disponíveis (0, 1, 2, 3) em hexadecimal.\nRegistro inexistente referenciado na linha: " + lines[i]);
                                         return;
                                     }
                                     if (Integer.parseInt(regSt) > 3) {
-                                        this.throwErrorAlert("Solo 4 registros disponibles (0,1,2,3)hexadecimal \nReferenciando un registro no existente en la linea: " + lines[i]);
+                                        this.throwErrorAlert("Há apenas 4 registros disponíveis (0, 1, 2, 3) em hexadecimal.\nRegistro inexistente referenciado na linha: " + lines[i]);
                                         return;
                                     }
                                 }
@@ -215,7 +215,7 @@ public class TextEditorController implements Initializable {
                 String dirSt = lineParts[1].split(base + "")[0];
                 if (base == 'B') {
                     if (dirSt.length() > 4) {
-                        this.throwErrorAlert("LittleEmu Memory Range: (0000-1111)binary\nSe está intentando direccionar memoria con más de 4 digitos en formato binario en la linea: " + lines[i]);
+                        this.throwErrorAlert("Faixa de memória do LittleEmu: (0000-1111) em binário.\nTentativa de endereçar a memória com mais de 4 dígitos na linha: " + lines[i]);
                         return;
                     }
                     String toAdd = this.fillZeros(dirSt, base, 4, lines[i]);
@@ -226,16 +226,16 @@ public class TextEditorController implements Initializable {
                     }
                 } else if (base == 'D') {
                     if (dirSt.length() > 2) {
-                        this.throwErrorAlert("LittleEmu Memory Range: (0-15)decimal\nSe está intentando direccionar memoria con más de 2 digitos en formato decimal en la linea: " + lines[1]);
+                        this.throwErrorAlert("Faixa de memória do LittleEmu: (0-15) em decimal.\nTentativa de endereçar a memória com mais de 2 dígitos na linha: " + lines[1]);
                         return;
                     }else{
                         if(this.isValidDecimal(dirSt)){
                             if(Integer.parseInt(dirSt) > 15){
-                                this.throwErrorAlert("LittleEmu Memory Range: (0-15)decimal\nSe está intentando direccionar memoria fuera del rango en la linea:" + lines[i]);
+                                this.throwErrorAlert("Faixa de memória do LittleEmu: (0-15) em decimal.\nTentativa de endereçar a memória fora da faixa na linha: " + lines[i]);
                                 return;
                             }
                         }else{
-                            this.throwErrorAlert("Dígito no decimal encontrado en la linea: "+ lines[i]);
+                            this.throwErrorAlert("Dígito não decimal encontrado na linha: " + lines[i]);
                             return;
                         }
                     }
@@ -247,7 +247,7 @@ public class TextEditorController implements Initializable {
                     }
                 } else if (base == 'H') {
                     if(dirSt.length() > 1){
-                        this.throwErrorAlert("LittleEmu Memory Range: (0-F)hexadecimal\nSe está intentando direccionar memoria con más de 1 dígito en formato hexadecimal en la linea: "+ lines[i]);
+                        this.throwErrorAlert("Faixa de memória do LittleEmu: (0-F) em hexadecimal.\nTentativa de endereçar a memória com mais de 1 dígito na linha: " + lines[i]);
                         return;
                     }
                     String toAdd = this.fillZeros(dirSt, base, 1, lines[i]);
@@ -257,19 +257,19 @@ public class TextEditorController implements Initializable {
                         return;
                     }
                 }else{
-                    this.throwErrorAlert("El sufijo que identifica el formato de la dirección ha sido omitido o es incorrecto.\nLinea: "+lines[i]);
+                    this.throwErrorAlert("O sufixo que identifica o formato do endereço foi omitido ou está incorreto.\nLinha: " + lines[i]);
                     return;
                 }
             }else if(opcode.equals("HALT")){
                 if(lineParts.length > 1){
-                    this.throwErrorAlert("Error de sintaxis en la linea: "+lines[i]+"\nLa instrucción HALT no debe recibir parametros.");
+                    this.throwErrorAlert("Erro de sintaxe na linha: " + lines[i] + "\nA instrução HALT não deve receber parâmetros.");
                 }else{
                     code.add("11110000");
                 }
             }else if(opcode.equals("STR_VAR")){
                 
             }else{
-                this.throwErrorAlert("OPCODE desconocido, la instrucción no es válida.\nLinea: "+ lines[i]);
+                this.throwErrorAlert("OPCODE desconhecido; a instrução não é válida.\nLinha: " + lines[i]);
             }
         }   
     }
@@ -364,7 +364,7 @@ public class TextEditorController implements Initializable {
                     toReturn = toReturn + st;
                     return toReturn;
                 } else {
-                    this.throwErrorAlert("Dígito no binario encontrado en la linea: " + line);
+                    this.throwErrorAlert("Dígito não binário encontrado na linha: " + line);
                     return null;
                 }
             case 'D':
@@ -375,14 +375,14 @@ public class TextEditorController implements Initializable {
                     toReturn = toReturn + st;
                     return toReturn;
                 } else {
-                    this.throwErrorAlert("Dígito no decimal encontrado en la linea: " + line);
+                    this.throwErrorAlert("Dígito não decimal encontrado na linha: " + line);
                     return null;
                 }
             case 'H':
                 if (this.isValidHex(st)) {
                     return st;
                 } else {
-                    this.throwErrorAlert("Dígito no hexadecimal encontrado en la linea: " + line);
+                    this.throwErrorAlert("Dígito não hexadecimal encontrado na linha: " + line);
                     return null;
                 }
             default:
@@ -392,7 +392,7 @@ public class TextEditorController implements Initializable {
 
     public void throwErrorAlert(String error) {
         Alert al = new Alert(Alert.AlertType.ERROR);
-        al.setTitle("Error al ensamblar el codigo");
+        al.setTitle("Erro ao montar o código");
         al.setContentText(error);
         al.showAndWait();
     }

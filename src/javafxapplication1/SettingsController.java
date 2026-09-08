@@ -35,7 +35,7 @@ public class SettingsController implements Initializable {
     
     ObservableList<String> resList = FXCollections.observableArrayList("UHD - (3840x2160p)", "QHD - (2560x1440p)", "FHD - (1920x1080p)");
     ObservableList<String> clockList = FXCollections.observableArrayList("0.5x","0.7x","1.0x","1.5x","2.0x","2.5x","3.0x","3.5x","4.0x");
-    ObservableList<String> demoList = FXCollections.observableArrayList("Sumar dos números","Restar dos números","Bucle infinito","Dividir dos números","Multiplicar dos números");
+    ObservableList<String> demoList = FXCollections.observableArrayList("Somar dois números","Subtrair dois números","Loop infinito","Dividir dois números","Multiplicar dois números");
 
     
     @Override

@@ -780,7 +780,7 @@ public class FXMLDocumentController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("TextEditor.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("LittleEmu - Editor de codigo");
+            stage.setTitle("LittleEmu - Editor de código");
             stage.setMaxHeight(695);
             stage.setMaxWidth(478);
             stage.setMinHeight(695);
@@ -803,18 +803,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void displayFilePicker(){
         Stage pickerStage = new Stage();
-        Label titleLbl = new Label("Seleccione un archivo y presione cargar para empezar");
+        Label titleLbl = new Label("Selecione um arquivo e pressione carregar para começar");
         titleLbl.setFont(new Font("Tahoma", 22));
-        Label dirLbl = new Label("No se ha seleccionado un archivo");
+        Label dirLbl = new Label("Nenhum arquivo selecionado");
         dirLbl.setTextFill(Color.web("#ef0400"));
-        Button selectFileBtn = new Button("Buscar archivo");
-        Button cargarBtn = new Button("Cargar archivo");
+        Button selectFileBtn = new Button("Procurar arquivo");
+        Button cargarBtn = new Button("Carregar arquivo");
         Button demosBtn = new Button("      Demos     ");
         cargarBtn.setDisable(true);
         
         selectFileBtn.setOnAction((ActionEvent event) -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Buscar un archivo");
+            fileChooser.setTitle("Procurar um arquivo");
             File selectedFile = fileChooser.showOpenDialog(pickerStage);
             if(selectedFile != null){
                 demo = false;
@@ -846,8 +846,8 @@ public class FXMLDocumentController implements Initializable {
                     pickerStage.close();
                 }else{
                     Alert al = new Alert(AlertType.ERROR);
-                    al.setTitle("Error al leer el archivo seleccionado");
-                    al.setContentText("El formato del archivo cargado no es compatible");
+                    al.setTitle("Erro ao ler o arquivo selecionado");
+                    al.setContentText("O formato do arquivo carregado não é compatível");
                     al.showAndWait();
                 }
             }
@@ -857,40 +857,40 @@ public class FXMLDocumentController implements Initializable {
             Stage stg = new Stage();
             VBox root = new VBox();
             root.setAlignment(Pos.CENTER);
-            Label demoLbl = new Label("Demos");
+            Label demoLbl = new Label("Demonstrações");
             demoLbl.setFont(new Font("Tahoma",22));
-            Button sumBtn = new Button("Sumar dos números");
-            Button subBtn =  new Button("Restar dos números");
-            Button infLoopBtn = new Button("Bucle infinito");
-            Button divBtn = new Button("Dividir dos números");
-            Button mulBtn = new Button("Multiplicar dos números");
+            Button sumBtn = new Button("Somar dois números");
+            Button subBtn =  new Button("Subtrair dois números");
+            Button infLoopBtn = new Button("Loop infinito");
+            Button divBtn = new Button("Dividir dois números");
+            Button mulBtn = new Button("Multiplicar dois números");
             
             sumBtn.setOnMouseClicked((Event event1) -> {
-                dirLbl.setText("DEMO1: Sumar dos números");
+                dirLbl.setText("DEMO1: Somar dois números");
                 stg.close();
                 demo = true;
                 cargarBtn.setDisable(false);
             });
             subBtn.setOnMouseClicked((Event event1) -> {
-                dirLbl.setText("DEMO2: Restar dos números");
+                dirLbl.setText("DEMO2: Subtrair dois números");
                 stg.close();
                 demo = true;
                 cargarBtn.setDisable(false);
             });
             infLoopBtn.setOnMouseClicked((Event event1) -> {
-                dirLbl.setText("DEMO3: Bucle infinito");
+                dirLbl.setText("DEMO3: Loop infinito");
                 stg.close();
                 demo = true;
                 cargarBtn.setDisable(false);
             });
             divBtn.setOnMouseClicked((Event event1) -> {
-                dirLbl.setText("DEMO4: Dividir dos números");
+                dirLbl.setText("DEMO4: Dividir dois números");
                 stg.close();
                 demo = true;
                 cargarBtn.setDisable(false);
             });
             mulBtn.setOnMouseClicked((Event event1) -> {
-                dirLbl.setText("DEMO5: Multiplicar dos números");
+                dirLbl.setText("DEMO5: Multiplicar dois números");
                 stg.close();
                 demo = true;
                 cargarBtn.setDisable(false);
@@ -913,7 +913,7 @@ public class FXMLDocumentController implements Initializable {
         root.getChildren().addAll(titleLbl, dirLbl, selectFileBtn, demosBtn ,cargarBtn);
         Scene scene = new Scene(root, 600, 400);
 
-        pickerStage.setTitle("Cargar programa en RAM");
+        pickerStage.setTitle("Carregar programa na RAM");
         pickerStage.setScene(scene);
         pickerStage.show(); 
     }

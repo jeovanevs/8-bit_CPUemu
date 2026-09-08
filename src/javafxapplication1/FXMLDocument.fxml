@@ -73,12 +73,12 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="778.0" layoutY="465.0" prefHeight="35.0" prefWidth="219.0" text="REG_INSTRUCCIÓN">
+      <Label layoutX="778.0" layoutY="465.0" prefHeight="35.0" prefWidth="219.0" text="REG_INSTRUÇÃO">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="777.0" layoutY="575.0" prefHeight="46.0" prefWidth="244.0" text="REG_DIRECCIÓN">
+      <Label layoutX="777.0" layoutY="575.0" prefHeight="46.0" prefWidth="244.0" text="REG_ENDEREÇO">
          <font>
             <Font size="24.0" />
          </font>
@@ -108,7 +108,7 @@
             <Font size="48.0" />
          </font>
       </Label>
-      <Label layoutX="1265.0" layoutY="161.0" prefHeight="35.0" prefWidth="110.0" text="Dirección">
+      <Label layoutX="1265.0" layoutY="161.0" prefHeight="35.0" prefWidth="110.0" text="Endereço">
          <font>
             <Font size="24.0" />
          </font>
@@ -344,7 +344,7 @@
       <Line fx:id="rEnable1_line" endX="960.0" endY="785.0" scaleX="6.0" startX="960.0" startY="702.0" stroke="#505050" />
       <Line fx:id="data6_line" endX="1053.0" endY="456.0" scaleX="6.0" startX="1053.0" startY="225.0" stroke="#505050" />
       <Line fx:id="data7_line" endX="1055.0" endY="454.0" scaleY="6.0" startX="1020.0" startY="454.0" stroke="#505050" />
-      <Label layoutX="1027.0" layoutY="585.0" prefHeight="35.0" prefWidth="219.0" text="Entrada_dirección">
+      <Label layoutX="1027.0" layoutY="585.0" prefHeight="35.0" prefWidth="219.0" text="Entrada_endereço">
          <font>
             <Font size="24.0" />
          </font>
