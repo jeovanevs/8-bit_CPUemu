@@ -43,9 +43,9 @@
             <Font size="48.0" />
          </font>
       </Label>
-      <Label layoutX="544.0" layoutY="412.0" prefHeight="55.0" prefWidth="204.0" text="UNIDAD DE" textAlignment="CENTER">
+      <Label layoutX="544.0" layoutY="412.0" prefHeight="55.0" prefWidth="204.0" text="UNIDADE DE" textAlignment="CENTER">
          <font>
-            <Font size="36.0" />
+            <Font size="35.0" />
          </font>
       </Label>
       <Label layoutX="202.0" layoutY="461.0" prefHeight="35.0" prefWidth="110.0" text="Entrada">
@@ -68,7 +68,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="298.0" layoutY="751.0" prefHeight="35.0" prefWidth="59.0" text="Salida">
+      <Label layoutX="298.0" layoutY="751.0" prefHeight="35.0" prefWidth="59.0" text="Saída">
          <font>
             <Font size="20.0" />
          </font>
@@ -83,19 +83,19 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="970.0" layoutY="748.0" prefHeight="35.0" prefWidth="219.0" text="Habilitar_Lectura">
+      <Label layoutX="970.0" layoutY="748.0" prefHeight="35.0" prefWidth="219.0" text="Habilitar_Leitura">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="935.0" layoutY="782.0" prefHeight="35.0" prefWidth="219.0" text="Habilitar_Escritura">
+      <Label layoutX="935.0" layoutY="782.0" prefHeight="35.0" prefWidth="219.0" text="Habilitar_Escrita">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="561.0" layoutY="457.0" prefHeight="55.0" prefWidth="171.0" text="CONTROL" textAlignment="CENTER">
+      <Label layoutX="555.0" layoutY="457.0" prefHeight="55.0" prefWidth="186.0" text="CONTROLE" textAlignment="CENTER">
          <font>
-            <Font size="36.0" />
+            <Font size="35.0" />
          </font>
       </Label>
       <Label layoutX="1355.0" layoutY="84.0" prefHeight="55.0" prefWidth="110.0" text="RAM" textAlignment="CENTER">
@@ -113,7 +113,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="1401.0" layoutY="161.0" prefHeight="35.0" prefWidth="121.0" text="Data">
+      <Label layoutX="1401.0" layoutY="161.0" prefHeight="35.0" prefWidth="121.0" text="Dados">
          <font>
             <Font size="24.0" />
          </font>
@@ -349,7 +349,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="1143.0" layoutY="189.0" prefHeight="35.0" prefWidth="71.0" text="Data">
+      <Label layoutX="1143.0" layoutY="189.0" prefHeight="35.0" prefWidth="71.0" text="Dados">
          <font>
             <Font size="24.0" />
          </font>
