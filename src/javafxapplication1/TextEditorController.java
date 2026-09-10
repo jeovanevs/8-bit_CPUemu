@@ -158,6 +158,11 @@ public class TextEditorController implements Initializable {
                     return;
                 }
                 for (int j = 0; j < 2; j++) {
+                    arguments[j] = arguments[j].trim();
+                    if (arguments[j].isEmpty()) {
+                        this.throwErrorAlert("Registrador ausente na linha: " + line);
+                        return;
+                    }
                     if (arguments[j].length() == 1) {//Si el primer argumento es la letra de un registro
                         if (!arguments[j].equals("A") && !arguments[j].equals("B") && !arguments[j].equals("C") && !arguments[j].equals("D")) {
                             this.throwErrorAlert("Registro inválido referenciado em: " + lines[i]);
@@ -245,6 +250,11 @@ public class TextEditorController implements Initializable {
                     this.throwErrorAlert("A instrução " + opcode + " exige um endereço de memória.");
                     return;
                 }
+                String operand = lineParts[1].trim();
+                if (operand.length() < 2) {
+                    this.throwErrorAlert("Endereço de memória ausente ou incompleto na linha: " + line);
+                    return;
+                }
                 if (opcode.equals("JUMP")) {
                     code.add(i, "1010");
                 } else if (opcode.equals("JUMP_NEG")) {
@@ -272,8 +282,8 @@ public class TextEditorController implements Initializable {
                 } else if (opcode.equals("STORE_D")) {
                     code.add(i, "0111");
                 }
-                char base = lineParts[1].charAt(lineParts[1].length() - 1);
-                String dirSt = lineParts[1].split(base + "")[0];
+                char base = operand.charAt(operand.length() - 1);
+                String dirSt = operand.substring(0, operand.length() - 1);
                 if (base == 'B') {
                     if (dirSt.length() > 4) {
                         this.throwErrorAlert("Faixa de memória do LittleEmu: (0000-1111) em binário.\nTentativa de endereçar a memória com mais de 4 dígitos na linha: " + lines[i]);
@@ -478,7 +488,6 @@ public class TextEditorController implements Initializable {
     }
 
     public boolean isValidBinary(String st) {
-        System.out.println(st);
         for (int i = 0; i < st.length(); i++) {
             if (st.charAt(i) != '0' && st.charAt(i) != '1') {
                 return false;
