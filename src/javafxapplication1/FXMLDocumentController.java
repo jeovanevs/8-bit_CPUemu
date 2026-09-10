@@ -62,6 +62,7 @@ public class FXMLDocumentController implements Initializable {
     private CPU cpu = new CPU();
     private RAM ram = new RAM();
     private GUI_BusAnimator  bs_animator;
+    private boolean cpuInitialized;
     public static ArrayList<Thread> threads = new ArrayList<>();
     String filePath;
     
@@ -421,6 +422,10 @@ public class FXMLDocumentController implements Initializable {
 
     //@FXML
     private void startCPU() {
+        if (this.cpuInitialized) {
+            return;
+        }
+
         this.setSlider();
         this.clockSpeed_slider.setOnMouseReleased((Event event) -> {
             onSlide();
@@ -564,6 +569,7 @@ public class FXMLDocumentController implements Initializable {
         }catch(Exception ex){}
         
         this.cpu.setAnimator(this.bs_animator);
+        this.cpuInitialized = true;
     }
     
     @FXML
@@ -783,7 +789,6 @@ public class FXMLDocumentController implements Initializable {
             TextEditorController editorController = loader.getController();
             // Liga o editor à RAM da janela principal antes de exibi-lo.
             editorController.setCodeConsumer(this::loadAssembledCode);
-            this.startCPU();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("LittleEmu - Editor de código");
@@ -1031,7 +1036,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.startCPU();
     }    
     
 }
