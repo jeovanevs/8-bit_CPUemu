@@ -115,10 +115,22 @@ public class TextEditorController implements Initializable {
         }
     }
 
+    /**
+     * Inspeciona o Assembly e converte cada instrução para 8 bits.
+     *
+     * Exemplos aceitos:
+     *   ADD A,B       -> 10000001
+     *   LOAD_A 13D    -> 00101101
+     *   HALT          -> 11110000
+     *
+     * Exemplos rejeitados:
+     *   ADD A         -> faltam dois registradores
+     *   LOAD_A        -> falta o endereço de memória
+     */
     @FXML
     public void inspect(ActionEvent event) {
         // A lista recebe as instruções de máquina geradas para cada linha válida.
-        // A integração dessa lista com a RAM será feita no próximo passo.
+        // Por exemplo, ADD A,B gera "1000" + "00" + "01" = "10000001".
         ArrayList<String> code = new ArrayList<>();
         String text = this.format(this.getCode()).toUpperCase();
         ArrayList<String> sourceLines = new ArrayList<>();
@@ -286,6 +298,7 @@ public class TextEditorController implements Initializable {
                 }
                 char base = operand.charAt(operand.length() - 1);
                 // Separa o valor do endereço do sufixo antes da validação numérica.
+                // Exemplo: 13D vira valor "13" e base "D", gerando "1101".
                 String dirSt = operand.substring(0, operand.length() - 1);
                 if (base == 'B') {
                     if (dirSt.length() > 4) {
