@@ -792,10 +792,8 @@ public class FXMLDocumentController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("LittleEmu - Editor de código");
-            stage.setMaxHeight(695);
-            stage.setMaxWidth(478);
-            stage.setMinHeight(695);
-            stage.setMinWidth(478);
+            stage.setMinHeight(300);
+            stage.setMinWidth(390);
             stage.show();
         }catch(Exception ex){       
         }
