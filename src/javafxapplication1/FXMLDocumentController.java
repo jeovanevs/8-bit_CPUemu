@@ -951,24 +951,32 @@ public class FXMLDocumentController implements Initializable {
         pickerStage.show(); 
     }
     
+    /**
+     * Valida um arquivo de memória e carrega suas instruções na RAM.
+     * Cada linha representa um endereço e deve conter exatamente 8 bits.
+     */
     public boolean loadCode(){
         File fl = new File(this.filePath);
         try (BufferedReader br = new BufferedReader(new FileReader(fl))) {
+            ArrayList<String> code = new ArrayList<>();
             String line;
-            int lineCounter = 0;
             while ((line = br.readLine()) != null) {
-               if(line.length() > 8){
+               line = line.trim();
+               if (line.length() != 8 || code.size() >= 16) {
                    return false;
-               }else{
-                   for(int i = 0 ; i < 8; i++){
-                       if(line.charAt(i) != '1' && line.charAt(i)!= '0'){
-                           return false;
-                       }
+               }
+               for(int i = 0 ; i < line.length(); i++){
+                   if(line.charAt(i) != '1' && line.charAt(i)!= '0'){
+                       return false;
                    }
                }
-               this.ram.setByAddress(lineCounter, line);
-               lineCounter++;
+               code.add(line);
             }
+            this.ram.resetAll();
+            for (int address = 0; address < code.size(); address++) {
+                this.ram.setByAddress(address, code.get(address));
+            }
+            this.ram.update();
             return true;
         }catch(Exception ex){
             return false;
