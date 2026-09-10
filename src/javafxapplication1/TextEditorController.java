@@ -382,10 +382,12 @@ public class TextEditorController implements Initializable {
             this.codeConsumer.accept(code);
         }
 
+        // O alerta confirma que a inspeção terminou e informa o tamanho do programa.
         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
         successAlert.setTitle("Inspeção concluída");
-        successAlert.setHeaderText(null);
-        successAlert.setContentText("O código passou na inspeção com sucesso.");
+        successAlert.setHeaderText("Código válido");
+        successAlert.setContentText("O código passou na inspeção com sucesso e gerou "
+            + code.size() + " instrução(ões) para a RAM.");
         successAlert.showAndWait();
     }
     
