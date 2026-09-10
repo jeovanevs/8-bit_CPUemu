@@ -15,7 +15,8 @@ java -jar dist/LittleEmu.jar
 ## Editor de código
 
 Use o botão de novo arquivo para abrir o editor. O editor permite carregar e
-salvar arquivos de texto, formatar o código e inspecionar instruções Assembly.
+salvar arquivos `.asm` ou `.txt`, formatar o código e inspecionar instruções
+Assembly.
 Após uma inspeção bem-sucedida, as instruções são convertidas para 8 bits,
 carregadas na RAM e podem ser executadas pelos controles da CPU.
 
