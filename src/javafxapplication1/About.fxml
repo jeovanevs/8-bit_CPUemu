@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" onDragDetected="#showAbout" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.AboutController">
+<AnchorPane id="AnchorPane" onDragDetected="#showAbout" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.432" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.AboutController">
    <children>
       <Label layoutX="187.0" layoutY="43.0" prefHeight="53.0" prefWidth="227.0" text="LittleEmu App">
          <font>
