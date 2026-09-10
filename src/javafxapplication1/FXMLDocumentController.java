@@ -795,7 +795,13 @@ public class FXMLDocumentController implements Initializable {
             stage.setMinHeight(300);
             stage.setMinWidth(390);
             stage.show();
-        }catch(Exception ex){       
+        }catch(IOException ex){
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, "Não foi possível abrir o editor.", ex);
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro ao abrir editor");
+            alert.setHeaderText(null);
+            alert.setContentText("Não foi possível abrir a janela do editor de código.");
+            alert.showAndWait();
         }
     }
 

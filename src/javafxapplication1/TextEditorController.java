@@ -60,11 +60,10 @@ public class TextEditorController implements Initializable {
 
     @FXML
     public void drawSavePane(ActionEvent event) {
-        Stage st = new Stage();
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-        File file = fileChooser.showSaveDialog(st);
+        File file = fileChooser.showSaveDialog(this.code_TextArea.getScene().getWindow());
 
         if (file != null) {
             this.saveFile(this.code_TextArea.getText(), file);
