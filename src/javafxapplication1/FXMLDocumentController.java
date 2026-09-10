@@ -801,6 +801,13 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * Substitui o programa atual da RAM pelo resultado da inspeção do editor.
+     * A CPU precisa ser pausada e reiniciada antes da troca para começar o
+     * novo programa no estado inicial e no endereço de memória zero.
+     *
+     * @param code instruções de máquina de 8 bits geradas pelo editor
+     */
     private void loadAssembledCode(List<String> code) {
         // Interrompe a execução anterior antes de substituir o programa.
         this.cpu.pauseEnulation();
@@ -808,6 +815,7 @@ public class FXMLDocumentController implements Initializable {
 
         // A nova inspeção substitui o conteúdo anterior da RAM.
         this.ram.resetAll();
+        // Cada instrução ocupa um endereço sequencial da memória.
         for (int address = 0; address < code.size(); address++) {
             this.ram.setByAddress(address, code.get(address));
         }
