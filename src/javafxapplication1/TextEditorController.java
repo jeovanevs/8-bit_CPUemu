@@ -378,8 +378,17 @@ public class TextEditorController implements Initializable {
         }
 
         // Só envia o programa depois que todas as instruções passaram pela inspeção.
+        // Mesmo se o callback falhar, a inspeção deve continuar sendo comunicada ao usuário.
         if (this.codeConsumer != null) {
-            this.codeConsumer.accept(code);
+            try {
+                this.codeConsumer.accept(code);
+            } catch (Exception ex) {
+                Alert consumerError = new Alert(Alert.AlertType.ERROR);
+                consumerError.setTitle("Erro ao carregar na RAM");
+                consumerError.setHeaderText(null);
+                consumerError.setContentText("A inspeção do código foi concluída, mas não foi possível carregar na RAM.");
+                consumerError.showAndWait();
+            }
         }
 
         // O alerta confirma que a inspeção terminou e informa o tamanho do programa.
