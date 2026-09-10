@@ -191,6 +191,10 @@ public class CPU implements Runnable{
     }
     
     public void resetAll(){
+        // Um novo programa sempre deve começar no ciclo FETCH, nunca em HALT.
+        CPU.interrupt = false;
+        this.nextStage = CPU_Stage.FETCH;
+        this.emulationStage = EmuStage.PAUSED;
         this.resetBus();
         this.resetRegistersHighlight();
         this.resetRegisters();
