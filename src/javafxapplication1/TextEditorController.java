@@ -8,6 +8,8 @@ package javafxapplication1;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -78,28 +80,73 @@ public class TextEditorController implements Initializable {
         }
     }
 
+    // Abre um arquivo Assembly e coloca o texto no editor para edição ou inspeção.
+    @FXML
+    private void loadFile(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Abrir código");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Arquivos de texto (*.txt)", "*.txt"));
+        File file = fileChooser.showOpenDialog(this.code_TextArea.getScene().getWindow());
+
+        if (file == null) {
+            return;
+        }
+
+        try {
+            String content = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+            this.code_TextArea.setText(content);
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao abrir arquivo");
+            alert.setHeaderText(null);
+            alert.setContentText("Não foi possível ler o arquivo selecionado.");
+            alert.showAndWait();
+        }
+    }
+
     @FXML
     public void inspect(ActionEvent event) {
+        // A lista recebe as instruções de máquina geradas para cada linha válida.
+        // A integração dessa lista com a RAM será feita no próximo passo.
         ArrayList<String> code = new ArrayList<>();
         String text = this.format(this.getCode()).toUpperCase();
-        String[] lines = text.split("\n");
-        int lineCount = lines.length;
-        for (int i = 0; i < lineCount; i++) {
-            String[] lineParts = lines[i].split(" ");
-            if (lineParts.length != 2) {
-                if(!lineParts[0].equals("HALT")){
-                    this.throwErrorAlert("Erro de sintaxe na linha: " + lines[i]);
-                    return;
-                }
+        ArrayList<String> sourceLines = new ArrayList<>();
+
+        // Normaliza as linhas antes da análise: remove espaços externos,
+        // comentários e diretivas que não representam instruções executáveis.
+        for (String rawLine : text.split("\\r?\\n")) {
+            String line = rawLine.trim();
+            int commentIndex = line.indexOf("//");
+            if (commentIndex >= 0) {
+                line = line.substring(0, commentIndex).trim();
             }
+            if (!line.isEmpty() && !line.startsWith("#")) {
+                sourceLines.add(line);
+            }
+        }
+        String[] lines = sourceLines.toArray(new String[0]);
+
+        // Converte cada instrução Assembly para o formato binário da CPU.
+        for (int i = 0; i < sourceLines.size(); i++) {
+            String line = sourceLines.get(i);
+            String[] lineParts = line.split("\\s+", 2);
             String opcode = lineParts[0];
             if (opcode.equals("ADD") || opcode.equals("SUB")) {
+                if (lineParts.length != 2) {
+                    this.throwErrorAlert("A instrução " + opcode + " exige dois registradores.");
+                    return;
+                }
                 if (opcode.equals("ADD")) {
                     code.add(i, "1000");
                 } else if (opcode.equals("SUB")) {
                     code.add(i, "1001");
                 }
                 String[] arguments = lineParts[1].split(",");
+                if (arguments.length != 2) {
+                    this.throwErrorAlert("A instrução " + opcode + " exige dois registradores na linha: " + line);
+                    return;
+                }
                 for (int j = 0; j < 2; j++) {
                     if (arguments[j].length() == 1) {//Si el primer argumento es la letra de un registro
                         if (!arguments[j].equals("A") && !arguments[j].equals("B") && !arguments[j].equals("C") && !arguments[j].equals("D")) {
@@ -184,6 +231,10 @@ public class TextEditorController implements Initializable {
             } else if (opcode.equals("JUMP") || opcode.equals("JUMP_NEG") || opcode.equals("JUMP_ZRO") || opcode.equals("JUMP_ABV") || opcode.equals("JUMP_OFW")
                     || opcode.equals("LOAD_A") || opcode.equals("LOAD_B") || opcode.equals("LOAD_C") || opcode.equals("LOAD_D")
                     || opcode.equals("STORE_A") || opcode.equals("STORE_B") || opcode.equals("STORE_C") || opcode.equals("STORE_D")) {
+                if (lineParts.length != 2) {
+                    this.throwErrorAlert("A instrução " + opcode + " exige um endereço de memória.");
+                    return;
+                }
                 if (opcode.equals("JUMP")) {
                     code.add(i, "1010");
                 } else if (opcode.equals("JUMP_NEG")) {
@@ -262,16 +313,25 @@ public class TextEditorController implements Initializable {
                 }
             }else if(opcode.equals("HALT")){
                 if(lineParts.length > 1){
-                    this.throwErrorAlert("Erro de sintaxe na linha: " + lines[i] + "\nA instrução HALT não deve receber parâmetros.");
+                    this.throwErrorAlert("Erro de sintaxe na linha: " + line + "\nA instrução HALT não deve receber parâmetros.");
+                    return;
                 }else{
                     code.add("11110000");
                 }
             }else if(opcode.equals("STR_VAR")){
-                
+                this.throwErrorAlert("A instrução STR_VAR ainda não é suportada.");
+                return;
             }else{
-                this.throwErrorAlert("OPCODE desconhecido; a instrução não é válida.\nLinha: " + lines[i]);
+                this.throwErrorAlert("OPCODE desconhecido; a instrução não é válida.\nLinha: " + line);
+                return;
             }
-        }   
+        }
+
+        Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+        successAlert.setTitle("Inspeção concluída");
+        successAlert.setHeaderText(null);
+        successAlert.setContentText("O código passou na inspeção com sucesso.");
+        successAlert.showAndWait();
     }
     
     public String getIntBinaryAsString(int i){

@@ -13,7 +13,7 @@
           <Button fx:id="save_btn" mnemonicParsing="false" onAction="#drawSavePane" style="-fx-background-color: transparent;" text="Salvar" />
             <Button fx:id="inspect_btn" mnemonicParsing="false" onAction="#inspect" style="-fx-background-color: transparent;" text="Inspecionar" />
             <Button fx:id="format_btn" mnemonicParsing="false" onAction="#formatCode" style="-fx-background-color: transparent;" text="Format" />
-            <Button fx:id="load_btn" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Carregar" />
+            <Button fx:id="load_btn" mnemonicParsing="false" onAction="#loadFile" style="-fx-background-color: transparent;" text="Carregar" />
             <Button fx:id="help_btn" mnemonicParsing="false" onAction="#showHelp" style="-fx-background-color: transparent;" text="Ajuda" />
         </items>
       </ToolBar>
