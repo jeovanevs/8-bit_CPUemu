@@ -802,6 +802,10 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void loadAssembledCode(List<String> code) {
+        // Interrompe a execução anterior antes de substituir o programa.
+        this.cpu.pauseEnulation();
+        this.cpu.resetAll();
+
         // A nova inspeção substitui o conteúdo anterior da RAM.
         this.ram.resetAll();
         for (int address = 0; address < code.size(); address++) {
