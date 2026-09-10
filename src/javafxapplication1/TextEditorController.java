@@ -158,6 +158,7 @@ public class TextEditorController implements Initializable {
                     return;
                 }
                 for (int j = 0; j < 2; j++) {
+                    // Aceita espaços ao redor da vírgula, mas não argumentos vazios.
                     arguments[j] = arguments[j].trim();
                     if (arguments[j].isEmpty()) {
                         this.throwErrorAlert("Registrador ausente na linha: " + line);
@@ -250,6 +251,7 @@ public class TextEditorController implements Initializable {
                     this.throwErrorAlert("A instrução " + opcode + " exige um endereço de memória.");
                     return;
                 }
+                // O último caractere identifica a base: B (binária), D (decimal) ou H (hexadecimal).
                 String operand = lineParts[1].trim();
                 if (operand.length() < 2) {
                     this.throwErrorAlert("Endereço de memória ausente ou incompleto na linha: " + line);
@@ -283,6 +285,7 @@ public class TextEditorController implements Initializable {
                     code.add(i, "0111");
                 }
                 char base = operand.charAt(operand.length() - 1);
+                // Separa o valor do endereço do sufixo antes da validação numérica.
                 String dirSt = operand.substring(0, operand.length() - 1);
                 if (base == 'B') {
                     if (dirSt.length() > 4) {
