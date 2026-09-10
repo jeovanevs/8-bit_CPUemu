@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -777,7 +778,11 @@ public class FXMLDocumentController implements Initializable {
     private void newFile(){
         try{
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("TextEditor.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TextEditor.fxml"));
+            Parent root = loader.load();
+            TextEditorController editorController = loader.getController();
+            editorController.setCodeConsumer(this::loadAssembledCode);
+            this.startCPU();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("LittleEmu - Editor de código");
@@ -788,6 +793,14 @@ public class FXMLDocumentController implements Initializable {
             stage.show();
         }catch(Exception ex){       
         }
+    }
+
+    private void loadAssembledCode(List<String> code) {
+        this.ram.resetAll();
+        for (int address = 0; address < code.size(); address++) {
+            this.ram.setByAddress(address, code.get(address));
+        }
+        this.ram.update();
     }
     
     @FXML

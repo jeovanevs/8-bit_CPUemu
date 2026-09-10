@@ -14,7 +14,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,6 +49,12 @@ public class TextEditorController implements Initializable {
 
     @FXML
     private Button help_btn;
+
+    private Consumer<List<String>> codeConsumer;
+
+    public void setCodeConsumer(Consumer<List<String>> codeConsumer) {
+        this.codeConsumer = codeConsumer;
+    }
 
     @FXML
     public void drawSavePane(ActionEvent event) {
@@ -325,6 +333,15 @@ public class TextEditorController implements Initializable {
                 this.throwErrorAlert("OPCODE desconhecido; a instrução não é válida.\nLinha: " + line);
                 return;
             }
+        }
+
+        if (code.size() > 16) {
+            this.throwErrorAlert("O programa possui mais de 16 instruções e não cabe na RAM.");
+            return;
+        }
+
+        if (this.codeConsumer != null) {
+            this.codeConsumer.accept(code);
         }
 
         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
