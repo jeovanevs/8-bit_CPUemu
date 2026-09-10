@@ -847,7 +847,7 @@ public class FXMLDocumentController implements Initializable {
                 }else{
                     Alert al = new Alert(AlertType.ERROR);
                     al.setTitle("Erro ao ler o arquivo selecionado");
-                    al.setContentText("O formato do arquivo carregado não é compatível");
+                    al.setContentText("O formato do arquivo carregado não é compatível. O arquivo deve conter apenas 0s e 1s, com no máximo 8 bits por linha.");
                     al.showAndWait();
                 }
             }

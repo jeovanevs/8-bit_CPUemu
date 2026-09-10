@@ -5,15 +5,15 @@
  */
 package javafxapplication1;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafxapplication1.CPU.CPU;
 
@@ -21,17 +21,24 @@ import javafxapplication1.CPU.CPU;
  * @author Jorge
  */
 public class LittleEmuApp extends Application {  
+    private static final double CONTENT_WIDTH = 1700;
+    private static final double CONTENT_HEIGHT = 1020;
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        Scene scene = new Scene(root);
+    Group content = new Group(root);
+    StackPane viewport = new StackPane(content);
+    Scene scene = new Scene(viewport, CONTENT_WIDTH, CONTENT_HEIGHT);
+
+    viewport.widthProperty().addListener((observable, oldValue, newValue) ->
+        scaleContent(content, viewport));
+    viewport.heightProperty().addListener((observable, oldValue, newValue) ->
+        scaleContent(content, viewport));
 
         stage.setScene(scene);
-        stage.setMaxHeight(1020);
-        stage.setMaxWidth(1700);
-        stage.setMinHeight(1020);
-        stage.setMinWidth(1700);
+    stage.setMinWidth(800);
+    stage.setMinHeight(500);
         stage.setTitle("LittleEmu - Emulador");
         stage.getIcons().add(new Image(LittleEmuApp.class.getResourceAsStream("microchip.png")));
         stage.setOnCloseRequest(new EventHandler(){
@@ -41,10 +48,17 @@ public class LittleEmuApp extends Application {
             }
         });
         
-        //stage.setResizable(false);
-
         stage.show();
+        scaleContent(content, viewport);
         
+    }
+
+    private void scaleContent(Group content, StackPane viewport) {
+        double scale = Math.min(
+                viewport.getWidth() / CONTENT_WIDTH,
+                viewport.getHeight() / CONTENT_HEIGHT);
+        content.setScaleX(scale);
+        content.setScaleY(scale);
     }
     
     /**
