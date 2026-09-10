@@ -151,6 +151,11 @@ public class TextEditorController implements Initializable {
         }
         String[] lines = sourceLines.toArray(new String[0]);
 
+        if (sourceLines.isEmpty()) {
+            this.throwErrorAlert("O programa não contém instruções Assembly.");
+            return;
+        }
+
         // Converte cada instrução Assembly para o formato binário da CPU.
         for (int i = 0; i < sourceLines.size(); i++) {
             String line = sourceLines.get(i);
