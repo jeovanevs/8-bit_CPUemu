@@ -61,8 +61,9 @@ public class TextEditorController implements Initializable {
     @FXML
     public void drawSavePane(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-        fileChooser.getExtensionFilters().add(extFilter);
+        // Permite salvar tanto textos comuns quanto programas Assembly.
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Assembly (*.asm)", "*.asm"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
         File file = fileChooser.showSaveDialog(this.code_TextArea.getScene().getWindow());
 
         if (file != null) {
@@ -97,8 +98,9 @@ public class TextEditorController implements Initializable {
     private void loadFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Abrir código");
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Arquivos de texto (*.txt)", "*.txt"));
+        // Arquivos Assembly e arquivos de texto usam o mesmo formato de entrada.
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Assembly (*.asm)", "*.asm"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivos de texto (*.txt)", "*.txt"));
         File file = fileChooser.showOpenDialog(this.code_TextArea.getScene().getWindow());
 
         if (file == null) {
