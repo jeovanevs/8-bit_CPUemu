@@ -980,6 +980,9 @@ public class FXMLDocumentController implements Initializable {
                // As linhas ficam temporariamente na lista para evitar RAM parcial.
                code.add(line);
             }
+            if (code.isEmpty()) {
+                return false;
+            }
             // Só altera a RAM depois que todas as linhas foram aprovadas.
             this.ram.resetAll();
             for (int address = 0; address < code.size(); address++) {
