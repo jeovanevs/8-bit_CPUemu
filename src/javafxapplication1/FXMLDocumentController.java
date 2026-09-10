@@ -954,6 +954,7 @@ public class FXMLDocumentController implements Initializable {
     /**
      * Valida um arquivo de memória e carrega suas instruções na RAM.
      * Cada linha representa um endereço e deve conter exatamente 8 bits.
+     * Exemplo válido: "00101101". A RAM possui 16 endereços, de 0 a 15.
      */
     public boolean loadCode(){
         File fl = new File(this.filePath);
@@ -962,16 +963,20 @@ public class FXMLDocumentController implements Initializable {
             String line;
             while ((line = br.readLine()) != null) {
                line = line.trim();
+               // Valida o tamanho e o limite da RAM antes de guardar a linha.
                if (line.length() != 8 || code.size() >= 16) {
                    return false;
                }
+               // Um arquivo binário como "00101102" é rejeitado por conter '2'.
                for(int i = 0 ; i < line.length(); i++){
                    if(line.charAt(i) != '1' && line.charAt(i)!= '0'){
                        return false;
                    }
                }
+               // As linhas ficam temporariamente na lista para evitar RAM parcial.
                code.add(line);
             }
+            // Só altera a RAM depois que todas as linhas foram aprovadas.
             this.ram.resetAll();
             for (int address = 0; address < code.size(); address++) {
                 this.ram.setByAddress(address, code.get(address));
