@@ -50,8 +50,10 @@ public class TextEditorController implements Initializable {
     @FXML
     private Button help_btn;
 
+    // Recebe o código binário compilado e o devolve ao controlador da CPU.
     private Consumer<List<String>> codeConsumer;
 
+    // Permite que a janela do editor seja conectada à RAM da janela principal.
     public void setCodeConsumer(Consumer<List<String>> codeConsumer) {
         this.codeConsumer = codeConsumer;
     }
@@ -340,6 +342,7 @@ public class TextEditorController implements Initializable {
             return;
         }
 
+        // Só envia o programa depois que todas as instruções passaram pela inspeção.
         if (this.codeConsumer != null) {
             this.codeConsumer.accept(code);
         }

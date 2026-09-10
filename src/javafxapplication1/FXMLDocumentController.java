@@ -781,6 +781,7 @@ public class FXMLDocumentController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("TextEditor.fxml"));
             Parent root = loader.load();
             TextEditorController editorController = loader.getController();
+            // Liga o editor à RAM da janela principal antes de exibi-lo.
             editorController.setCodeConsumer(this::loadAssembledCode);
             this.startCPU();
             Scene scene = new Scene(root);
@@ -796,10 +797,12 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void loadAssembledCode(List<String> code) {
+        // A nova inspeção substitui o conteúdo anterior da RAM.
         this.ram.resetAll();
         for (int address = 0; address < code.size(); address++) {
             this.ram.setByAddress(address, code.get(address));
         }
+        // Atualiza os registros visuais depois de gravar todas as instruções.
         this.ram.update();
     }
     
