@@ -81,12 +81,15 @@ public class TextEditorController implements Initializable {
     }
 
     private void saveFile(String content, File file) {
-        try {
-            FileWriter fileWriter = null;
-            fileWriter = new FileWriter(file);
+        // Fecha automaticamente o arquivo mesmo quando a gravação falha.
+        try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(content);
-            fileWriter.close();
         } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao salvar arquivo");
+            alert.setHeaderText(null);
+            alert.setContentText("Não foi possível salvar o código no arquivo selecionado.");
+            alert.showAndWait();
         }
     }
 
