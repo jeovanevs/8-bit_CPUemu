@@ -159,7 +159,7 @@ public class ControlUnit {
             case ("1101"):
                 return Instruction.JUMP_ABV;
             case ("1110"):
-                return Instruction.JUMP_BLW;
+                return Instruction.JUMP_OFW;
             case ("1111"):
                 return Instruction.HALT;
             default:

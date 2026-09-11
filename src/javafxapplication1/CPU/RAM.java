@@ -50,7 +50,11 @@ public class RAM {
 
     public void update() {
         for (int i = 0; i < registers.size(); i++) {
-            registers.get(i).update();
+            try {
+                registers.get(i).update();
+            } catch (IllegalStateException ex) {
+                // Ignora atualização gui da RAM antes do toolkit JavaFX estar pronto.
+            }
         }
     }
 

@@ -35,7 +35,9 @@ public class CpuRegister extends Register{
     //Resalta el registro instanciado (THIS) en la GUI 
 
     public void setHighlight(Boolean bool){
-        this.rectangle.setVisible(!bool);
+        if (this.rectangle != null) {
+            this.rectangle.setVisible(!bool);
+        }
     }
     
     public NumberingSystem swapBase(){
@@ -85,12 +87,16 @@ public class CpuRegister extends Register{
     }
     
     public void update(){
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run() {
-                updateGUI();
-            }
-        });
+        try {
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+                    updateGUI();
+                }
+            });
+        } catch (IllegalStateException ex) {
+            // Ignora atualização da GUI quando o toolkit JavaFX ainda não foi inicializado.
+        }
     }
 
     public void showInText(){

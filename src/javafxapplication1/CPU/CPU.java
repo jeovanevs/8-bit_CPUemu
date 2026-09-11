@@ -122,26 +122,36 @@ public class CPU implements Runnable{
     }
     
     public void updateGUI(){
-        Platform.runLater(new Runnable(){
-                @Override
-                public void run() {
-                    registerA.update();
-                    registerB.update();
-                    registerC.update();
-                    registerD.update();
-                    controlUnit.updateGUI();
-                }
-            });
+        try {
+            Platform.runLater(new Runnable(){
+                    @Override
+                    public void run() {
+                        registerA.update();
+                        registerB.update();
+                        registerC.update();
+                        registerD.update();
+                        controlUnit.updateGUI();
+                    }
+                });
+        } catch (IllegalStateException ex) {
+            // O toolkit JavaFX ainda não foi inicializado; o reset da CPU deve continuar sem falhar.
+        }
     }
     
     public void resetRegistersHighlight(){
-        this.animator.resetRegistersBus();
+        if (this.animator != null) {
+            this.animator.resetRegistersBus();
+        }
         this.registerA.setHighlight(false);
         this.registerB.setHighlight(false);
         this.registerC.setHighlight(false);
         this.registerD.setHighlight(false);
-        this.controlUnit.getAddressRegister().setHighlight(false);
-        this.controlUnit.getInstructionRegister().setHighlight(false);
+        if (this.controlUnit.getAddressRegister() != null) {
+            this.controlUnit.getAddressRegister().setHighlight(false);
+        }
+        if (this.controlUnit.getInstructionRegister() != null) {
+            this.controlUnit.getInstructionRegister().setHighlight(false);
+        }
     }
     
     public NumberingSystem swapAddressRegisterBase(){
@@ -181,12 +191,24 @@ public class CPU implements Runnable{
     }
     
     public void resetRegisters(){
-        this.registerA.setValue(0);
-        this.registerB.setValue(0);
-        this.registerC.setValue(0);
-        this.registerD.setValue(0);
-        this.controlUnit.getAddressRegister().setValue(0);
-        this.controlUnit.getInstructionRegister().setValue(0);
+        if (this.registerA != null) {
+            this.registerA.setValue(0);
+        }
+        if (this.registerB != null) {
+            this.registerB.setValue(0);
+        }
+        if (this.registerC != null) {
+            this.registerC.setValue(0);
+        }
+        if (this.registerD != null) {
+            this.registerD.setValue(0);
+        }
+        if (this.controlUnit.getAddressRegister() != null) {
+            this.controlUnit.getAddressRegister().setValue(0);
+        }
+        if (this.controlUnit.getInstructionRegister() != null) {
+            this.controlUnit.getInstructionRegister().setValue(0);
+        }
         this.updateGUI();
     }
     
@@ -411,7 +433,7 @@ public class CPU implements Runnable{
                 this.ram.update();
                 
                 this.addrRegisterCountUp();
-            }else if(inst == Instruction.JUMP || inst == Instruction.JUMP_ABV || inst == Instruction.JUMP_BLW || inst == Instruction.JUMP_ZRO || inst == Instruction.JUMP_NEG){
+            }else if(inst == Instruction.JUMP || inst == Instruction.JUMP_ABV || inst == Instruction.JUMP_OFW || inst == Instruction.JUMP_ZRO || inst == Instruction.JUMP_NEG){
                 for(int i = 0; i  < 11; i ++){
                     if(i%2 == 0){
                         this.controlUnit.getAddressRegister().setHighlight(true);
@@ -443,6 +465,24 @@ public class CPU implements Runnable{
                     }else{
                         this.addrRegisterCountUp();
                     }
+                }if(inst == Instruction.JUMP_ABV){
+                    if(!this.controlUnit.getZflag() && !this.controlUnit.getNflag()){
+                        String str = this.controlUnit.getInstructionRegister().getBinaryValueAsString();
+                        String jump_addr = "0000"+str.charAt(4)+str.charAt(5)+str.charAt(6)+str.charAt(7);
+                        this.controlUnit.getAddressRegister().setValue(jump_addr);
+                        this.updateGUI();
+                    }else{
+                        this.addrRegisterCountUp();
+                    }
+                }if(inst == Instruction.JUMP_OFW){
+                    if(this.controlUnit.getOflag()){
+                        String str = this.controlUnit.getInstructionRegister().getBinaryValueAsString();
+                        String jump_addr = "0000"+str.charAt(4)+str.charAt(5)+str.charAt(6)+str.charAt(7);
+                        this.controlUnit.getAddressRegister().setValue(jump_addr);
+                        this.updateGUI();
+                    }else{
+                        this.addrRegisterCountUp();
+                    }
                 }
                 //*****************HALT OPERATION************************
             }else if(inst == Instruction.HALT){
@@ -460,7 +500,9 @@ public class CPU implements Runnable{
     }
     
     public void resetBus(){
-        this.animator.resetBus();
+        if (this.animator != null) {
+            this.animator.resetBus();
+        }
     }  
     
     public CPU_Stage getNextStage(){

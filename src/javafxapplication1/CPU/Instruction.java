@@ -24,7 +24,7 @@ public enum Instruction {
     JUMP_NEG,
     JUMP_ZRO,
     JUMP_ABV,
-    JUMP_BLW,
+    JUMP_OFW,
     HALT;
     
 }
